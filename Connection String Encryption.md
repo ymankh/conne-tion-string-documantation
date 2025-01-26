@@ -51,7 +51,7 @@ Write-Output "Encrypted Connection String: $EncryptedBase64"
 
 ## Step 2: Store the Encrypted Connection String in IIS ASP.NET Core Environment Variables
 
-I'll create a Markdown file with steps to add environment variables in IIS using ASP.NET Core configurations, including placeholders for images.
+Add environment variables in IIS using ASP.NET Core configurations.
 
 # Configuring Environment Variables for Connection Strings in ASP.NET Core with IIS
 
