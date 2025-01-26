@@ -55,43 +55,7 @@ Add environment variables in IIS using ASP.NET Core configurations.
 
 # Configuring Environment Variables for Connection Strings in ASP.NET Core with IIS
 
-Create or update your `appsettings.json`:
-
-```json
-{
-  "ConnectionStrings": {
-    "PostgresConnection": "Host=localhost;Port=5432;Database=tgis_config;Username=postgres;Password=postgres"
-  }
-}
-```
-
-## Step 2: Create Environment-Specific Configuration
-
-In `Program.cs` or `Startup.cs`, ensure environment variable configuration:
-
-```csharp
-public class Program
-{
-    public static void Main(string[] args)
-    {
-        CreateHostBuilder(args).Build().Run();
-    }
-
-    public static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-                webBuilder.UseConfiguration(new ConfigurationBuilder()
-                    .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile("appsettings.json")
-                    .AddEnvironmentVariables()
-                    .Build());
-                webBuilder.UseStartup<Startup>();
-            });
-}
-```
-
-## Step 3: Configure IIS Environment Variables
+## Configure IIS Environment Variables
 
 
 1. Open IIS Manager
@@ -109,9 +73,11 @@ public class Program
 
 
 ```xml
-<environmentVariables>
-  <environmentVariable name="ConnectionStrings__DefaultConnection" value="your-actual-connection-string" />
-</environmentVariables>
+      <aspNetCore processPath="dotnet" arguments=".\your-app.dll" stdoutLogEnabled="false" stdoutLogFile=".\logs\stdout" hostingModel="inprocess">
+        <environmentVariables>
+          <environmentVariable name="ConnectionStrings__PostgresConnection" value="AQAAANCMnd8BFdERjHoAwE/Cl+sBAAA26DSNGdi4kKL6qc7xV6Q3wQAAAACAAAAAAAQZgAAAAEAACAAAAAPkSSzhoyzi2p2aWvM+ioSQ4nZVVvzgnc0Grad6T40gBBAAAOgAAAAAIAACAAAACfFzv4bbSQg+NCqlA+hmeXHVi0Gtqmjpgts32FzA0lFAAAABj0uqqbRI9zzZeFuXQ65X3Osqf1LO37Ml316qqHzd83ueJ00ZtBaEjRvKTjbdknoJEG+swK+qvQBRqIYjs/bxaIQWtlhvMW8ZY1k2bpJWVUAAAAChyd17WXXZ6IXUBaXyBgvJkzxb/AySF4wquHFJNQSMf2S5TF0lJB/TA4+BPThjNSpCYg+x8beF+MXjn4H1YRQo" />
+        </environmentVariables>
+      </aspNetCore>
 ```
 
 ## Troubleshooting Tips
